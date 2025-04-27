@@ -141,25 +141,25 @@ extra:
       </style>
 plugins:
   - search
-  - print-site:
-      add_to_navigation: true
-      print_page_title: 'Print'
-      add_print_site_banner: false
-      # Table of contents
-      add_table_of_contents: false
-      toc_title: 'Table of Contents'
-      toc_depth: 3
-      # Content-related
-      add_full_urls: false
-      enumerate_headings: false
-      enumerate_figures: false
-      add_cover_page: false
-      cover_page_template: ""
-      path_to_pdf: ""
-      include_css: true
-      enabled: true
-      exclude:
-        - index.md
+  # - print-site:
+  #     add_to_navigation: true
+  #     print_page_title: 'Print'
+  #     add_print_site_banner: false
+  #     # Table of contents
+  #     add_table_of_contents: false
+  #     toc_title: 'Table of Contents'
+  #     toc_depth: 3
+  #     # Content-related
+  #     add_full_urls: false
+  #     enumerate_headings: false
+  #     enumerate_figures: false
+  #     add_cover_page: false
+  #     cover_page_template: ""
+  #     path_to_pdf: ""
+  #     include_css: true
+  #     enabled: true
+  #     exclude:
+  #       - index.md
 hide:
   - footer
 # google_analytics: ["UA-118407822-1", "kubernetes.github.io"]
