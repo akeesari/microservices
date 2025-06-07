@@ -181,17 +181,17 @@ nav:
     - Acknowledgments: introduction/acknowledgments.md      
     - Introduction: introduction/introduction.md  
   - Microservices:
-    - Getting Started with Microservices : microservices/0.gettingstarted.md
-    - Docker Fundamentals: microservices/docker-fundamentals.md
-    - Getting Started with Docker: microservices/0-docker-getting-started.md    
-    - Containerize a .NET Core Web API : microservices/1.aspnet-api.md
-    - Containerize a Node.js API: microservices/2.node-api.md      
-    - Containerize a .NET Core MVC Application : microservices/3.aspnet-app.md      
-    - Containerize a React.js Application : microservices/4.react-app.md      
-    - Create Your First Database with SQL server : microservices/6.sqlserver-db.md
-    - Create Your Second Database with PostgreSQL : microservices/7.postgresql-db.md
-    - Running Keycloak application in a Docker Container : microservices/8.keycloak.md
-    - Running Drupal Website in a Docker Container : microservices/9.drupal.md
+    - Getting Started with Microservices : microservices/1.getting-started.md
+    - Docker Fundamentals: microservices/2.docker-fundamentals.md
+    - Getting Started with Docker: microservices/3-docker-getting-started.md    
+    - Containerize a .NET Core Web API : microservices/4.aspnet-api.md
+    - Containerize a Node.js API: microservices/5.node-api.md      
+    - Containerize a .NET Core MVC Application : microservices/6.aspnet-app.md      
+    - Containerize a React.js Application : microservices/7.react-app.md      
+    - Create Your First Database with SQL server : microservices/8.sqlserver-db.md
+    - Create Your Second Database with PostgreSQL : microservices/9.postgresql-db.md
+    - Running Keycloak application in a Docker Container : microservices/10.keycloak.md
+    - Running Drupal Website in a Docker Container : microservices/11.drupal.md
   - Appendix:
     - Git Cheat Sheet: appendix/git-cheat-sheet.md
     - Docker Cheat Sheet: appendix/docker-cheat-sheet.md  
