@@ -1,4 +1,4 @@
-# **Chapter-1: Building Containerized Microservices**
+# Chapter-1: Building Containerized Microservices
 
 ## Introduction
 

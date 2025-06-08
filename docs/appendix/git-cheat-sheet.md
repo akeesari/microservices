@@ -1,4 +1,4 @@
-# **Git Commands**
+# Git Commands
 
 In this article, I am going to present a comprehensive cheat sheet of commonly used Git commands with examples. 
 

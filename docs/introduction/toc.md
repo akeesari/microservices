@@ -1,4 +1,4 @@
-# **Table of Contents**
+# Table of Contents
 
 - [About the Author](../introduction/about-author.md)
 - [Acknowledgments](../introduction/acknowledgments.md)

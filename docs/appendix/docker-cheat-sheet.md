@@ -1,4 +1,4 @@
-# **Docker Commands**
+# Docker Commands
 
 ## Introduction
 In this article, I am going to present a comprehensive cheat sheet of commonly used `Docker` commands
