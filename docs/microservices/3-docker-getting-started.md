@@ -46,7 +46,7 @@ In this task, we'll start by searching for an image to run locally. For example,
 
 ## Step 2: Create Docker Image
 
-Now that we've identified the image we want to use, let's pull it from Docker Hub into our local Docker Desktop and run it locally.
+Now that we've identified the image we want to use, let's pull it from Docker Hub into our local Docker Desktop. This step only downloads the image; we will run it in the next step.
 
 ```sh
 docker pull nginx
@@ -181,7 +181,7 @@ Status: Downloaded newer image for nginx:1.25.3-alpine
 2024/01/15 04:39:23 [notice] 1#1: start worker process 32
 2024/01/15 04:39:23 [notice] 1#1: start worker process 33
 ```
-Now, you'll see two containers running, one from local Docker Desktop and the second one from the remote Docker Hub registry.
+Now, you'll see two containers running, both started from images pulled from the Docker Hub registry: one from `nginx:1.25.3-alpine` and the other from `nginx`.
 
 ```sh
 docker ps
@@ -272,9 +272,12 @@ f21ada11af57   nginx:1.25.3-alpine   "/docker-entrypoint.…"   7 minutes ago   
 
 Naming the Container:
 
-You can also name the container using the `--name` flag:
+You can also name the container using the `--name` flag. Port 8080 on your host is still used by the container you started in Step 4, so stop and remove that container first, otherwise the new container fails to start because the port is already allocated:
 
 ```sh
+docker stop f21ada11af57
+docker rm f21ada11af57
+
 docker run --name nginx-app -d -p 8080:80 nginx:1.25.3-alpine
 
 # output
