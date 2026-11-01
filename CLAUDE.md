@@ -71,7 +71,7 @@ Anything relevant to the current task (commit, push, doc sync, fixing breakage y
 
 ## Known gaps
 
-- Chapters 1-7, 10 and the cheat sheets not yet proofread (versions, typos, Azure DevOps/ACR dependence).
+- Azure DevOps/ACR dependence in chapters 1-7 and 10 not reviewed. TODO: confirm with the author whether to generalize.
 - No runnable `samples/` folder (Dockerfiles, compose files); Docker commands in chapters not re-verified.
 - README: GitHub path `akeesari/microservices` is assumed, and there is no tutoring/mentoring call-to-action. TODO: confirm with the author.
 - No secret scan or link check in CI.

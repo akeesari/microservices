@@ -5,7 +5,7 @@ In this article, I am going to present a comprehensive cheat sheet of commonly u
 
 ## Dockerfile
 
-A Dockerfile is a text document that contains instructions for building a Docker image. Docker can automatically build images by interpreting instructions from a Dockerfile. This page outlines the commands available for use within a Dockerfile."
+A Dockerfile is a text document that contains instructions for building a Docker image. Docker can automatically build images by interpreting instructions from a Dockerfile. This page outlines the commands available for use within a Dockerfile.
 
 ## 1. FROM
 Specifies the base image for your Docker image.
@@ -14,7 +14,7 @@ FROM <image>[:<tag>] [AS <name>]
 ```
 Example:
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ```
 
 ## 2. RUN
@@ -75,13 +75,14 @@ EXPOSE <port> [<port>/<protocol>...]
 ```
 Example:
 ```Dockerfile
-EXPOSE 80
+EXPOSE 8080
 ```
+`EXPOSE` only documents the port; publish it with `docker run -p`. Official .NET 8+ images listen on port 8080 by default.
 
 ## 8. ENV
 Sets environment variables.
 ```Dockerfile
-ENV <key> <value>
+ENV <key>=<value> ...
 ```
 Example:
 ```Dockerfile
@@ -95,8 +96,9 @@ ARG <name>[=<default value>]
 ```
 Example:
 ```Dockerfile
-ARG CONNECTION_STRING
+ARG BUILD_CONFIGURATION=Release
 ```
+Don't pass secrets through `ARG`; build arguments remain visible in the image history.
 
 ## 10. VOLUME
 Creates a mount point and marks it as holding externally mounted volumes from native host or other containers.
@@ -207,7 +209,7 @@ COPY and ADD are used to copy files and directories from the host machine into t
 
 *COPY Instruction:*
 
-The COPY instruction copies files or directories from the build context (i.e., the directory containing the Dockerfile) into the container's filesystem. It can copy local files/directories as well as files/directories from URLs. However, it does not support extracting files from compressed archives (e.g., .tar.gz).
+The COPY instruction copies files or directories from the build context (i.e., the directory containing the Dockerfile) into the container's filesystem. It only copies local files and directories; it does not fetch URLs or extract compressed archives (e.g., .tar.gz).
 
 
 *ADD Instruction:*

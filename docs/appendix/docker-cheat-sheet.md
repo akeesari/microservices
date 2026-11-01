@@ -1,7 +1,9 @@
 # Docker Commands
 
 ## Introduction
-In this article, I am going to present a comprehensive cheat sheet of commonly used `Docker` commands
+In this article, I am going to present a comprehensive cheat sheet of commonly used `Docker` commands.
+
+Compose commands use the current `docker compose` syntax (Compose V2). The old standalone `docker-compose` binary is end-of-life.
 
 ## Installing Docker
 
@@ -14,7 +16,7 @@ sudo apt-get install docker.io
 
 
 # MacOS (using Homebrew):
-brew install docker
+brew install --cask docker
 
 # Windows OS (using choco)
 choco install docker-desktop
@@ -32,18 +34,18 @@ which docker
 What is the version installed on your machine
 
 ```sh
-docker -version
+docker --version
 ```
 
 ## General Commands
 
-Start the docker daemon
+Start the docker daemon (on Windows and macOS, start Docker Desktop instead)
 
 ```sh
-docker -d
+sudo dockerd
 ```
 
-Get help with Docker. Can also use –help on all subcommands
+Get help with Docker. Can also use `--help` on all subcommands
 
 ```sh
 docker --help
@@ -77,7 +79,7 @@ Build an image from a Dockerfile
 
 ```sh
 # Build an image from a Dockerfile and tag it with a specified name.
-docker build -t <image_name>
+docker build -t <image_name> .
 
 # build an image and tag with naming conventions
 docker build -t projectname/domainname/appname:yyyymmdd.sequence .
@@ -85,7 +87,7 @@ docker build -t projectname/domainname/appname:yyyymmdd.sequence .
 docker build -t sample/aspnet-api:20230226.1 .
 
 # Build an image from a Dockerfile without the cache
-docker build -t <image_name> . –no-cache
+docker build --no-cache -t <image_name> .
 ```
 
 ## Docker Run
@@ -94,7 +96,7 @@ docker build -t <image_name> . –no-cache
 # Create and run a container from an image, with a custom name:
 docker run --name <container_name> <image_name>
 
-# Run a container with and publish a container’s port(s) to the host.
+# Run a container and publish the container's port(s) to the host.
 docker run -p <host_port>:<container_port> <image_name>
 
 # Run a container in the background
@@ -110,7 +112,7 @@ docker run --rm -p 8080:80 project1/domain1/app1:20230226.1
 - **--rm:** This option automatically removes the container when it exits. It ensures that the container is cleaned up after it finishes running. This is useful for temporary or disposable containers.
 - **-p 8080:80:** This option maps the host machine's port 8080 to the container's port 80. It establishes a network connection between the host and the container, allowing access to the containerized application via port 8080 on the host.
 
-Exit the container
+Exit an interactive container shell (started with `docker run -it`)
 
 ```sh
 exit
@@ -155,7 +157,7 @@ docker network create -d bridge network1
 
 ## Clean up resources
 
-you can use the `docker system prune` command to clean up all dangling or unused resources, including images, containers, volumes, and networks that are not tagged or connected to a running container. This command is helpful for freeing up disk space and removing unnecessary resources.
+You can use the `docker system prune` command to remove stopped containers, unused networks, dangling images and build cache. Add `-a` to also remove all unused images, and `--volumes` to also remove unused volumes. This is helpful for freeing up disk space.
 
 ```sh
 # before cleaning up Docker, first check all the available resources using the following commands:
@@ -172,7 +174,7 @@ docker system prune -a
 
 ```
 
-If you need to clean up all containers and images locally in Docker Desktop, you can use the following commands:
+If you need to clean up all containers and images locally in Docker Desktop, you can use the following commands (bash syntax; these delete everything, so use them with care):
 
 ```sh
 # To delete all containers including its volumes use,
@@ -192,14 +194,14 @@ Below are some commonly used Docker Compose commands:
 ### Starts services
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 Starts the services defined in your `docker-compose.yml` file. It creates and starts containers as specified in the configuration.
 
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 Starts the services in the background (detached mode).
@@ -207,24 +209,24 @@ Starts the services in the background (detached mode).
 ### Stops services
 
 ```bash
-docker-compose down
+docker compose down
 ```
-Stops and removes containers, networks, volumes, and other services defined in your `docker-compose.yml` file.
+Stops and removes the containers and networks defined in your `docker-compose.yml` file. Named volumes are kept.
 
 
 ```bash
-docker-compose down -v
+docker compose down -v
 ```
-Stops and removes containers, networks, volumes, and other services while also removing volumes.
-    
+Stops and removes containers and networks, and also removes the volumes.
+
 
 ```bash
-docker-compose down --volumes --rmi all
+docker compose down --volumes --rmi all
 ```
-Stops and removes containers, networks, volumes, and other services, while also removing volumes and images.    
+Stops and removes containers and networks, and also removes the volumes and all images used by the services.
 
 ```bash
-docker-compose stop
+docker compose stop
 ```
 
 Stops the services defined in your `docker-compose.yml` file without removing them.
@@ -232,25 +234,25 @@ Stops the services defined in your `docker-compose.yml` file without removing th
 ### Lists the containers
 
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 Lists the containers that are part of your Docker Compose setup, showing their status.
     
 ```bash
-docker-compose ps -a
+docker compose ps -a
 ```
 Lists all containers, including stopped ones, that are part of your Docker Compose setup.
 
 ### Displays log
 
 ```bash
-docker-compose logs
+docker compose logs
 ```
 Displays log output from services. You can use the `-f` option to follow the logs in real-time.
 
 ```bash
-docker-compose logs webserver
+docker compose logs webserver
 ```
 
 Displays logs for a specific service.
@@ -258,14 +260,14 @@ Displays logs for a specific service.
 ### Executes a command
 
 ```bash
-docker-compose exec webserver ls -l
+docker compose exec webserver ls -l
 ```
 Executes a command in a running service container.
 
 ### Builds services
 
 ```bash
-docker-compose build
+docker compose build
 ```
 Builds or rebuilds services defined in your `docker-compose.yml` file.
 
@@ -273,7 +275,7 @@ Builds or rebuilds services defined in your `docker-compose.yml` file.
 ### Restarts services
 
 ```bash
-docker-compose restart
+docker compose restart
 ```
 Restarts services.
 
@@ -281,47 +283,39 @@ Restarts services.
 ### Displays configuration
 
 ```bash
-docker-compose config
+docker compose config
 ```
-Validates and displays the configuration of your `docker-compose.yml` file.
+Validates, resolves and displays your `docker-compose.yml` file in canonical form.
 
 ### Pauses services
 
 ```bash
-docker-compose pause
+docker compose pause
 ```
-Pauses all services. Containers remain running, but they stop processing requests.
+Pauses all services. The container processes are suspended and stop handling requests.
 
 ```bash
-docker-compose unpause
+docker compose unpause
 ```
 Unpauses services after they have been paused.
 
 ```bash
-docker-compose top
+docker compose top
 ```
 Displays the running processes of a service.
 
 ### Scales service
 
 ```bash
-docker-compose scale webserver=3
+docker compose up -d --scale webserver=3
 ```
 Scales a service to the specified number of instances.
 
 ### Display events
 
 ```bash
-docker-compose events
+docker compose events
 ```
-### docker compose config
-
-Parse, resolve and render compose file in canonical forma
-
-```bash
-docker-compose config
-```
-
 Streams real-time events from your services.
 
 
@@ -340,7 +334,7 @@ Streams real-time events from your services.
 ### Advanced Commands
 
 - `docker exec [container] [command]`: Run a command inside a running container
-- `docker-compose up`: Start a Docker Compose application
+- `docker compose up`: Start a Docker Compose application
 - `docker network [subcommand]`: Manage Docker networks
 - `docker volume [subcommand]`: Manage Docker volumes
 - `docker logs [container]`: View the logs of a container

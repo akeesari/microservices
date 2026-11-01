@@ -22,8 +22,8 @@ choco install git
 To begin, it's important to configure your Git settings, associating your name and email with your commits. Use the following commands to set your name and email respectively:
 
 ``` sh
-git config --global user.name "anji.keesari"
-git config --global user.email "anjkeesari@gmail.com"
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
 ```
 ## Caching credentials:
 
@@ -32,6 +32,8 @@ Typing in login credentials repeatedly can be time consuming. To streamline this
 ``` sh
 git config --global credential.helper cache
 ```
+
+`cache` keeps credentials in memory for 15 minutes on Linux and macOS. On Windows, Git for Windows ships with Git Credential Manager, which is already the default helper.
 
 ## Enable automatic coloring of Git output  
 
@@ -69,7 +71,7 @@ To stage changes and prepare them for commit, use the git add command. You can a
 
 ``` sh
 git add <file-name>             # Add a specific file
-git add .                       # Add all changes in the current directory (excluding deletions)
+git add .                       # Add all changes in the current directory (new, modified and deleted files)
 git add test*                   # Add all files starting with 'test' in the current directory
 
 ```
@@ -80,7 +82,7 @@ Committing changes captures a snapshot of your code at a specific point in time.
 
 ``` sh
 git commit -m "(message)"       # Commits the changes with a custom message
-git commit -am "(message)"      # Adds all changes to staging and commits them with a custom message
+git commit -am "(message)"      # Stages all modified and deleted tracked files (not new files) and commits them
 
 ```
 
@@ -94,7 +96,7 @@ git log
 # commit's history including all files and their changes:
 git log -p
 
-press q any time to quit
+# press q any time to quit
 ```
 
 ## Commit details
@@ -121,27 +123,28 @@ If you have already pushed a commit to a remote repository and want to undo it, 
 ``` sh
 git revert <commit-id>
 ```
-Replace <commit-id> with the ID of the commit you want to undo.
+Replace `<commit-id>` with the ID of the commit you want to undo.
 
 If you have already committed changes and want to undo the most recent commit, you have a few options depending on your desired outcome:
 - Undo the commit and keep the changes as unstaged modifications:
 ```sh
 git reset HEAD^
 ```
-Undo the commit and completely discard the changes:
-```
+- Undo the commit and completely discard the changes (this cannot be undone; only use it on commits you have not pushed):
+```sh
 git reset --hard HEAD^
 ```
 
 ## Viewing differences 
 
-To compare the differences between versions, you can use the git diff command. It displays the changes made to files since the last commit. 
+To compare the differences between versions, you can use the git diff command. It displays the changes you have made but not yet staged. 
 
 ```sh
-git diff
+git diff            # unstaged changes
+git diff --staged   # staged changes, i.e. what the next commit will contain
 ```
 
-This will show the line-by-line differences between the current state of the files and the last committed version.
+This will show the line-by-line differences between your working files and the staging area (or, with `--staged`, the last commit).
 
 ## Pushing changes 
 
@@ -197,10 +200,10 @@ git checkout aspnet-api
 It will show a list of all branches and mark the current branch with an asterisk and highlight it in green.
 
 ```sh
-# Shows the list of all branches.
-git branch	
-# List all local branches in repository. With -a: show all branches (with remote).
-git branch -a 
+# List all local branches in the repository.
+git branch
+# With -a: show all branches, including remote-tracking branches.
+git branch -a
 
 # press q to quit
 ```
@@ -235,7 +238,7 @@ After performing the merge, it's a good practice to check the status of your rep
 
 ```sh
 git status
-git logs
+git log
 ```
 
 ## Delete branch
@@ -246,7 +249,9 @@ To delete a branch in Git, you can use either of the following commands:
 git branch --delete <branch-name>
 git branch -d <branch-name>
 
-example
+# -d refuses to delete a branch that has unmerged commits; use -D to force it
+
+# example
 # git branch to see list of branches before delete
 git branch
 # delete the branch
@@ -271,7 +276,8 @@ git branch new_branch 07615d50afde24d21e2180b90d3a0a58ec131980
 
 # Step 2: Switch to the new branch & commit
 
-git commit -am “(message)” 
+git checkout new_branch
+git commit -am "(message)"
 ```
 
 ## Rollback an old commit
@@ -279,7 +285,7 @@ git commit -am “(message)”
 You can revert an old commit using its commit id. 
 
 ``` sh
-git revert comit_id
+git revert <commit-id>
 ```
 ## How to resolve merge conflicts using git commands
 
@@ -333,14 +339,14 @@ Running this command will show you the stash ID, along with a description that i
 git stash list
 ```
 - Git stash pop:
-his command is used to apply the changes from the top of the stash stack and remove that stash from the stack.
+This command is used to apply the changes from the top of the stash stack and remove that stash from the stack.
 ```sh
-git stash pop:
+git stash pop
 ```
-- Git stash drop: 
+- Git stash drop:
 This command allows you to discard a stash from the stash stack. It permanently removes a stash and its changes, freeing up space in the stack.
 ```sh
-git stash drop: 
+git stash drop
 ```
 <!-- 
 ## How to set global git config settings?
