@@ -10,7 +10,7 @@ Runnable reference code for the book. Each sample was built and run with Docker;
 | [react-app](react-app) | 7 | React 19, Vite, nginx | `docker build -t sample/react-app . && docker run --rm -p 8080:80 sample/react-app` | <http://localhost:8080> |
 | [sqlserver](sqlserver) | 8 | SQL Server 2022 | see below | `sqlcmd -S localhost,1433 -U sa` |
 | [postgresql](postgresql) | 9 | PostgreSQL 17 | `docker compose up -d` | `psql -h localhost -U postgres` |
-| [keycloak](keycloak) | 10 | Keycloak 26 + PostgreSQL | `docker compose up -d` | <http://localhost:8080> (admin / `replaceme`) |
+| [keycloak](keycloak) | 10 | Keycloak 26 + PostgreSQL | `docker compose up -d` (Dockerfile variant: see below) | <http://localhost:8080> (admin / `replaceme`) |
 | [drupal](drupal) | 11 | Drupal 11 + PostgreSQL | `docker compose up -d` | <http://localhost:8080> |
 
 Run the samples one at a time: several use host port 8080.
@@ -26,6 +26,18 @@ docker run -d --name sqlserver -p 1433:1433 sample/sqlserver
 ```
 
 The image takes about 30 seconds to accept connections the first time.
+
+## Keycloak Dockerfile
+
+The compose file is the quickest route. To try the chapter's Dockerfile instead, pass the database settings at run time:
+
+```bash
+cd keycloak
+docker build -t sample/keycloak-app .
+docker network create keycloak-net
+docker run -d --rm --name keycloak-db --network keycloak-net -e POSTGRES_DB=keycloak -e POSTGRES_USER=keycloak -e POSTGRES_PASSWORD=replaceme postgres:17
+docker run --rm -p 8080:8080 --network keycloak-net -e KC_DB_URL=jdbc:postgresql://keycloak-db:5432/keycloak -e KC_DB_USERNAME=keycloak -e KC_DB_PASSWORD=replaceme -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=replaceme sample/keycloak-app
+```
 
 ## Overriding passwords for compose samples
 
