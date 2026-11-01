@@ -18,3 +18,9 @@ drafts/
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# Build output inside samples/
+samples/**/obj/
+samples/aspnet-*/bin/
+samples/**/node_modules/
+samples/react-app/dist/

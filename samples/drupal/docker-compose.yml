@@ -1,0 +1,33 @@
+# Drupal with PostgreSQL (chapter 11). Demo credentials only: change them.
+# Open http://localhost:8080 and, in the installer, choose:
+#   Database type: PostgreSQL, name: postgres, username: postgres,
+#   password: the value of POSTGRES_PASSWORD, ADVANCED OPTIONS > Host: postgres
+services:
+  drupal:
+    image: drupal:11-apache
+    ports:
+      - "8080:80"
+    volumes:
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles
+      - drupal-themes:/var/www/html/themes
+      - drupal-sites:/var/www/html/sites
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-replaceme}
+    volumes:
+      - drupal-db:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  drupal-modules:
+  drupal-profiles:
+  drupal-themes:
+  drupal-sites:
+  drupal-db:
