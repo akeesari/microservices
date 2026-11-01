@@ -18,7 +18,7 @@ py -m mkdocs build --strict             # must pass before every commit; this is
 
 - **No silent assumptions.** If scope or a requirement is ambiguous, ask. Never present a guess as settled. In docs, an undecided point is a `TODO:`, not an invented default.
 - **Stay in scope.** No unrelated files or adjacent cleanup. Smallest change that solves the problem; no new dependency, plugin or script without a demonstrated need.
-- **Work through to the end.** Keep going until the task is done and verified, or a real blocker stops you (an action needing the user's go-ahead such as a push, information only the user has, or a failure you can't fix). Then state the blocker, what you tried and what's needed. Fix failures you caused and update affected docs without asking, and report it.
+- **Work through to the end.** Keep going until the task is done, verified, committed and pushed, or a real blocker stops you (information only the user has, or a failure you can't fix). Then state the blocker, what you tried and what's needed. Fix failures you caused and update affected docs without asking, and report it. Don't wait for approval on steps that follow obviously from the task.
 - **Verify before claiming.** Never say the site builds or a check passes unless a run in this session showed it. Run the narrowest check first.
 
 ## Layout
@@ -51,7 +51,9 @@ When behavior, structure or tooling changes, update every affected document in t
 
 - One logical change per commit; stage by path, not `git add -A`.
 - Message `type: summary` (`feat`, `fix`, `docs`, `chore`, `ci`), imperative, under ~70 characters, body when the why isn't obvious.
-- Commit only when `mkdocs build --strict` passes. Push only when asked: a push to `main` deploys the live site.
+- Commit only when `mkdocs build --strict` passes.
+- When a task is complete and verified, commit and push to `main` without asking; CI deploys the live site. Never push a failing build, never force-push, and don't push another session's uncommitted work.
+- Push once per completed task, not per file. Report the commit hash(es) pushed.
 
 ## Working alongside other sessions
 
@@ -63,7 +65,9 @@ Applies to README, CLAUDE.md and commit messages (not the book chapters): conden
 
 ## Next steps
 
-End every development response with a **Next steps** list of 2-4 numbered options that need the user's go-ahead, grounded in a real gap below. Mark one **(Recommended)** and list it first. If nothing needs the user, say so in one line.
+End every development response with a **Next steps** list of 2-4 numbered suggestions for *new* tasks, grounded in a real gap below. Mark one **(Recommended)** and list it first. If there is nothing worth suggesting, say so in one line.
+
+Anything relevant to the current task (commit, push, doc sync, fixing breakage you caused, deleting orphaned images, `toc.md` updates) is done as part of the task, never listed as a next step.
 
 ## Known gaps
 
