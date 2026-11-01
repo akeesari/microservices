@@ -1,48 +1,74 @@
 # CLAUDE.md
 
-Guidance for Claude Code when working in this repository.
-
-## What this repo is
-
-The source of the free e-book **"Building Microservices with Containers: A Practical Guide"** by Anji Keesari, published as an MkDocs Material site at https://microservices.anjikeesari.com. It is content, not an application: there is no application code to compile. All rights reserved (see LICENSE); never copy content in from other sources.
+Source of the free e-book **"Building Microservices with Containers: A Practical Guide"** by Anji Keesari: Material for MkDocs, Markdown content, deployed to GitHub Pages at https://microservices.anjikeesari.com. There is no application code; "not breaking it" means the site builds and links resolve. All rights reserved (see LICENSE): never copy in content from other sources.
 
 ## Commands
 
-```bash
-pip install -r requirements.txt   # mkdocs-material + mkdocs-print-site-plugin
-mkdocs serve                      # live preview at http://127.0.0.1:8000/
-mkdocs build --strict             # must pass before any change is considered done
+```powershell
+py -m pip install -r requirements.txt   # mkdocs-material + mkdocs-print-site-plugin
+py -m mkdocs serve                      # http://127.0.0.1:8000/
+py -m mkdocs build --strict             # must pass before every commit; this is what CI runs
 ```
 
-CI (`.github/workflows/ci.yml`) runs `mkdocs build --strict` on every PR and push, and deploys to GitHub Pages on pushes to `main`.
+- On this Windows machine plain `python` is the Store shim; use `py -m ...` or a venv.
+- Set `NO_MKDOCS_2_WARNING=1` to silence the Material end-of-life banner.
+- Never run `mkdocs gh-deploy` by hand; CI deploys on push to `main`.
+
+## Operating principles
+
+- **No silent assumptions.** If scope or a requirement is ambiguous, ask. Never present a guess as settled. In docs, an undecided point is a `TODO:`, not an invented default.
+- **Stay in scope.** No unrelated files or adjacent cleanup. Smallest change that solves the problem; no new dependency, plugin or script without a demonstrated need.
+- **Work through to the end.** Keep going until the task is done and verified, or a real blocker stops you (an action needing the user's go-ahead such as a push, information only the user has, or a failure you can't fix). Then state the blocker, what you tried and what's needed. Fix failures you caused and update affected docs without asking, and report it.
+- **Verify before claiming.** Never say the site builds or a check passes unless a run in this session showed it. Run the narrowest check first.
 
 ## Layout
 
-- `docs/microservices/N.<slug>.md` : chapters 1-11, images in `docs/microservices/images/<topic>/`
-- `docs/introduction/` : author, acknowledgments, introduction, `toc.md` (hand-maintained)
-- `docs/appendix/` : cheat sheets
-- `docs/overrides/` : Material theme overrides (`home.html`, `404.html`, `main.html`, footer)
-- `docs/stylesheets/`, `docs/javascripts/` : extra CSS and JS, registered in `mkdocs.yml`
-- `mkdocs.yml` : site config **and the `nav:` list**, so every new page must be added there
-- `drafts/` : local-only notes, git-ignored. Do not publish or move into `docs/`
+- `docs/microservices/N.<slug>.md`: chapters 1-11; images in `docs/microservices/images/<topic>/`
+- `docs/introduction/`: author, acknowledgments, introduction, `toc.md` (hand-maintained)
+- `docs/appendix/`: cheat sheets
+- `docs/overrides/`: theme overrides; `docs/stylesheets/`, `docs/javascripts/`: extra CSS/JS
+- `mkdocs.yml`: site config **and the hand-curated `nav:`**; a new page is invisible until added there
+- `drafts/`: local-only, git-ignored; never move into `docs/`
+
+## Workflow rules
+
+- Don't add external scripts to `extra_javascript` without vetting (polyfill.io was removed for supply-chain reasons). Review `docs/overrides/` HTML changes for injected scripts.
+- No secrets or private data anywhere. Every password in examples is the placeholder `replaceme`; say demo values are for learning only.
+- Don't commit large binaries, `.DS_Store` or `site/`. Delete images no page references.
+- Preserve the author's voice when editing prose: fix errors and structure, don't rewrite style.
+- Changing a heading changes its anchor: update `docs/introduction/toc.md` in the same change (the strict build reports broken anchors).
+- Keep license and copyright notices intact; don't change the license without the author's say-so.
 
 ## Chapter template
 
-Each lab chapter follows this order: `# Chapter-N: Title`, Introduction, Technical Scenario, Objective (list of `Step-N` items), Prerequisites, Architecture Diagram, one `## Step-N: ...` section per step, Conclusion, References.
+`# Chapter-N: Title`, Introduction, Technical Scenario, Objective (list of `Step-N`), Prerequisites, Architecture Diagram, one `## Step-N:` section per step, Conclusion, References. Second person, short paragraphs, numbered steps; fenced code with a language tag; shell output after a `# output` comment. Links `{:target="_blank"}`; images `[![Alt text](images/x.png)](images/x.png){:target="_blank"}`; lowercase repo and image names.
 
-## Writing conventions
+## Keeping docs in sync
 
-- Second person ("you"), friendly and practical; short paragraphs, numbered steps.
-- Commands and config go in fenced code blocks with a language tag. Keep shell output examples after a `# output` comment.
-- External links use `{:target="_blank"}`; images use `[![Alt text](images/x.png)](images/x.png){:target="_blank"}`.
-- Use lowercase for repo and image names.
-- **Never put real credentials in examples.** Use the placeholder `replaceme` for every password or secret, and say that demo values are for learning only.
-- When you add, rename or retitle a heading, update the links in `docs/introduction/toc.md`: anchors are generated from the heading text and break silently otherwise (strict build reports them).
-- Image files must be referenced from a page. Delete images that no longer are.
+When behavior, structure or tooling changes, update every affected document in the same task and list them in the reply: `README.md` (usage, prerequisites, structure, chapter table), `helper.ps1` and `.github/workflows/ci.yml` (dev workflow, CI), and this file (layout, standards, workflow rules).
 
-## Before finishing a change
+## Commits
 
-1. `mkdocs build --strict` passes with no warnings or broken-link/anchor messages.
-2. New pages are in `nav:` and `toc.md`.
-3. No secrets, no `.DS_Store`, no build output (`site/`) committed.
-4. Keep the license and copyright notices intact. Do not change the license without the author's say-so.
+- One logical change per commit; stage by path, not `git add -A`.
+- Message `type: summary` (`feat`, `fix`, `docs`, `chore`, `ci`), imperative, under ~70 characters, body when the why isn't obvious.
+- Commit only when `mkdocs build --strict` passes. Push only when asked: a push to `main` deploys the live site.
+
+## Working alongside other sessions
+
+Treat uncommitted changes you didn't make as another session's work. Don't revert or overwrite them; ask before editing around something that looks unfinished.
+
+## Writing style for docs
+
+Applies to README, CLAUDE.md and commit messages (not the book chapters): condensed, each thing said once, tables and bullets over prose, current facts rather than edit history.
+
+## Next steps
+
+End every development response with a **Next steps** list of 2-4 numbered options that need the user's go-ahead, grounded in a real gap below. Mark one **(Recommended)** and list it first. If nothing needs the user, say so in one line.
+
+## Known gaps
+
+- Chapters 1-7, 10 and the cheat sheets not yet proofread (versions, typos, Azure DevOps/ACR dependence).
+- No runnable `samples/` folder (Dockerfiles, compose files); Docker commands in chapters not re-verified.
+- README: GitHub path `akeesari/microservices` is assumed, and there is no tutoring/mentoring call-to-action. TODO: confirm with the author.
+- No secret scan or link check in CI.
+- Material for MkDocs reaches end of life on 2027-05-05; a Zensical migration will be needed eventually.
