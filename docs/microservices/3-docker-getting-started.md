@@ -23,11 +23,11 @@ In this exercise, our objective is to accomplish and learn the following tasks:
 
 Before starting this lab, ensure you have the following prerequisites in place:
 
-- Visual Studio Code :  - [Visual Studio Code Downloads](https://code.visualstudio.com/download){:target="_blank"}.
-- Docker desktop :  - [Docker Downloads](https://docs.docker.com/get-docker/){:target="_blank"}.
-- Git Client tool:  - [Git Downloads](https://git-scm.com/downloads){:target="_blank"}.
+- Visual Studio Code: [Visual Studio Code Downloads](https://code.visualstudio.com/download){:target="_blank"}.
+- Docker Desktop: [Docker Downloads](https://docs.docker.com/get-docker/){:target="_blank"}.
+- Git client tool: [Git Downloads](https://git-scm.com/downloads){:target="_blank"}.
 
-Verify the docker installation by running following commands:
+Verify the Docker installation by running following commands:
 
 ```sh
 docker version
@@ -112,7 +112,7 @@ docker run nginx
 Open a new terminal and run the following command to list containers:
 
 ```sh
-dockder ps
+docker ps
 
 # output
 CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
@@ -192,15 +192,15 @@ CONTAINER ID   IMAGE                 COMMAND                  CREATED           
 6f5dbcae83bd   nginx                 "/docker-entrypoint.…"   6 minutes ago        Up 6 minutes        80/tcp    modest_hermann
 ```
 
-docker images from docker desktop
+Docker images from Docker Desktop
 
 [![Alt text](images/docker/image-2.png)](images/docker/image-2.png){:target="_blank"}
 
-docker containers from docker desktop
+Docker containers from Docker Desktop
 
 [![Alt text](images/docker/image-3.png)](images/docker/image-3.png){:target="_blank"}
 
-you can also run following commnds to see images and containers running locally.
+you can also run the following commands to see images and containers running locally.
 
 ```sh
 docker image ls
@@ -223,7 +223,7 @@ CONTAINER ID   IMAGE                 COMMAND                  CREATED          S
 
 ## Step 4: Port Binding
 
-Your application is now running inside the Docker container, and you've mapped port 8080 from the container to your host. This means you can access your application using `http://localhost:8080` in your web browser.
+In this step, you will map port 8080 on your host to port 80 inside the container. This means you can access your application using `http://localhost:8080` in your web browser.
 
 
 ```sh
@@ -244,7 +244,7 @@ f21ada11af57b799c9b834d0a6c8e6e1628c6289d64cf65fdc0968cbe94500fd
 
 ## Step 5: Browse the Frontend Application
 
-Open your web browser and navigate to `http://localhost:8080` to access your Node.js application running in the Docker container.
+Open your web browser and navigate to `http://localhost:8080` to access the Nginx web server running in the Docker container.
 
 [![Alt text](images/docker/image-4.png)](images/docker/image-4.png){:target="_blank"}
 
