@@ -1,3 +1,2 @@
 mkdocs-material
-mkdocs-glightbox
-mkdocs-pdf-export-plugin
+mkdocs-print-site-plugin

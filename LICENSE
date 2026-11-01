@@ -1,0 +1,27 @@
+Copyright (c) 2023-2026 Anji Keesari. All rights reserved.
+
+"Building Microservices with Containers: A Practical Guide", including all text,
+code samples, diagrams, screenshots, images, logos, the book cover, and the
+website source in this repository (together, the "Work"), is the exclusive
+property of Anji Keesari.
+
+No license or permission is granted to use, copy, reproduce, modify, translate,
+adapt, publish, distribute, sublicense, sell, or create derivative works from
+the Work, in whole or in part, in any medium, without prior written permission
+from the copyright holder. This includes, without limitation, use for
+commercial or non-commercial training courses, republication on other websites
+or platforms, and use as training data for machine-learning or AI models.
+
+Permitted without further permission:
+  - Reading the Work on its official website or in this repository.
+  - Viewing and forking this repository on GitHub, to the extent required by
+    the GitHub Terms of Service.
+  - Brief quotations with clear attribution and a link to the original, as
+    permitted by applicable fair use or fair dealing law.
+
+THE WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+THE AUTHOR SHALL NOT BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING
+FROM THE USE OF THE WORK. Commands and configurations in the Work are for
+learning purposes; review them before using them in any production environment.
+
+For permission requests, contact: anjkeesari@gmail.com
