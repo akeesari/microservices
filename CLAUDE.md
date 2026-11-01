@@ -28,6 +28,7 @@ py -m mkdocs build --strict             # must pass before every commit; this is
 - `docs/appendix/`: cheat sheets
 - `docs/overrides/`: theme overrides; `docs/stylesheets/`, `docs/javascripts/`: extra CSS/JS
 - `mkdocs.yml`: site config **and the hand-curated `nav:`**; a new page is invisible until added there
+- `samples/`: tested reference code for chapters 4-11; chapter Dockerfiles and compose files must match it. Change the sample first, test it with `docker build`/`docker compose up`, then update the chapter
 - `drafts/`: local-only, git-ignored; never move into `docs/`
 
 ## Workflow rules
@@ -72,7 +73,7 @@ Anything relevant to the current task (commit, push, doc sync, fixing breakage y
 ## Known gaps
 
 - Azure DevOps/ACR dependence in chapters 1-7 and 10 not reviewed. TODO: confirm with the author whether to generalize.
-- No runnable `samples/` folder (Dockerfiles, compose files); Docker commands in chapters not re-verified.
+- Chapter screenshots and pasted output for chapters 4-7 predate the .NET 10 / Node 24 / Vite update; commands match `samples/`, images may not.
 - README: GitHub path `akeesari/microservices` is assumed, and there is no tutoring/mentoring call-to-action. TODO: confirm with the author.
 - No secret scan or link check in CI.
 - Material for MkDocs reaches end of life on 2027-05-05; a Zensical migration will be needed eventually.

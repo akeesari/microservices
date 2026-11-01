@@ -50,6 +50,10 @@ You don't need prior Docker experience. Basic command-line and Git familiarity h
 - .NET SDK, Node.js (for the matching chapters)
 - An Azure account (Azure DevOps and Azure Container Registry) for the publishing steps
 
+## Runnable samples
+
+[`samples/`](samples) has a tested reference for every lab (.NET 10, Node 24, React 19 with Vite, SQL Server, PostgreSQL, Keycloak, Drupal). Use it to compare against your own work. Build and run commands are in [samples/README.md](samples/README.md).
+
 ## Run the site locally
 
 ```bash
@@ -68,6 +72,7 @@ docs/            Book content (Markdown), images, theme overrides
   introduction/  Author, acknowledgments, introduction, table of contents
   microservices/ Chapters 1-11 and their images
   appendix/      Cheat sheets
+samples/         Tested, runnable Dockerfiles and compose files for chapters 4-11
 mkdocs.yml       Site configuration and navigation
 .github/         CI: strict build on PRs, deploy to GitHub Pages on main
 CLAUDE.md        Guidance for AI-assisted editing of this repo
